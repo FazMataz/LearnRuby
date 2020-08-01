@@ -17,29 +17,29 @@ class Square
     @piece = piece
     case piece
     when "King"
-      @piece = King.new(c, v)
+      @piece = King.new(self)
     when "Queen"
-      @piece = Queen.new(c, v)
+      @piece = Queen.new(self)
     when "Rook"
-      @piece = Rook.new(c, v)
+      @piece = Rook.new(self)
     when "Bishop"
-      @piece = Bishop.new(c, v)
+      @piece = Bishop.new(self)
     when "Knight"
-      @piece = Knight.new(c, v)
+      @piece = Knight.new(self)
     when "Pawn"
-      @piece = Pawn.new(c, v)
+      @piece = Pawn.new(self)
     end
   end
 end
 
 class Piece
-  def initialize(c, v)
-    @loc = [c, v]
+  def initialize(square)
+    @square = square
   end
 end
 
 class King
-  def initialize(c, v)
+  def initialize(square)
     super()
   end
 end
