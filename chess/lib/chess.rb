@@ -45,22 +45,80 @@ class Piece
       raise StandardError.new "Invalid color."
     end
   end
+
+  def to_s
+    @symbol
+  end
 end
 
 class King < Piece
+  def initialize(square, color)
+    super(square, color)
+    case color.downcase
+    when "white" || "w"
+      @symbol = "♔"
+    when "black" || "b"
+      @symbol = "♚"
+    end
+  end
 end
 
 class Queen < Piece
+  def initialize(square, color)
+    super(square, color)
+    case color.downcase
+    when "white" || "w"
+      @symbol = "♕"
+    when "black" || "b"
+      @symbol = "♛"
+    end
+  end
 end
 
 class Rook < Piece
+  def initialize(square, color)
+    super(square, color)
+    case color.downcase
+    when "white" || "w"
+      @symbol = "♖"
+    when "black" || "b"
+      @symbol = "♜"
+    end
+  end
 end
 
 class Knight < Piece
+  def initialize(square, color)
+    super(square, color)
+    case color.downcase
+    when "white" || "w"
+      @symbol = "♘"
+    when "black" || "b"
+      @symbol = "♞"
+    end
+  end
 end
 
 class Bishop < Piece
+  def initialize(square, color)
+    super(square, color)
+    case color.downcase
+    when "white" || "w"
+      @symbol = "♗"
+    when "black" || "b"
+      @symbol = "♝"
+    end
+  end
 end
 
 class Pawn < Piece
+  def initialize(square, color)
+    super(square, color)
+    case color.downcase
+    when "white" || "w"
+      @symbol = "♙"
+    when "black" || "b"
+      @symbol = "♟︎"
+    end
+  end
 end

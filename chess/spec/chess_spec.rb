@@ -40,5 +40,11 @@ RSpec.describe "Piece" do
       piece = Pawn.new(Square.new("a", 1), "black")
       expect(piece.color).to eql("black")
     end
+    it "Each piece has a symbol, that also depends on color" do
+      piece = King.new(Square.new("a", 1), "black")
+      expect(piece.to_s).to eql("♚")
+      piece = King.new(Square.new("a", 1), "white")
+      expect(piece.to_s).to eql("♔")
+    end
   end
 end
