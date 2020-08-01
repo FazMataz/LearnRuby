@@ -27,8 +27,18 @@ end
 RSpec.describe "Piece" do
   describe "#initialize" do
     it "Can be either black or white" do
-      king = King.new(Square.new("a", 1), "black")
-      expect(king.color).to eql("black")
+      piece = King.new(Square.new("a", 1), "black")
+      expect(piece.color).to eql("black")
+      piece = Queen.new(Square.new("a", 1), "black")
+      expect(piece.color).to eql("black")
+      piece = Rook.new(Square.new("a", 1), "black")
+      expect(piece.color).to eql("black")
+      piece = Knight.new(Square.new("a", 1), "black")
+      expect(piece.color).to eql("black")
+      piece = Bishop.new(Square.new("a", 1), "black")
+      expect(piece.color).to eql("black")
+      piece = Pawn.new(Square.new("a", 1), "black")
+      expect(piece.color).to eql("black")
     end
   end
 end
