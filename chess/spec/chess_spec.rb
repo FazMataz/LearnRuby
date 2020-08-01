@@ -17,7 +17,9 @@ end
 
 RSpec.describe "Square" do
   describe "@piece" do
-    it "Contains a piece object"
-    square = Square.new("King")
+    it "Contains a piece object" do
+      square = Square.new("a", 3, "King")
+      expect(square.piece.class.name).to eql("King")
+    end
   end
 end
