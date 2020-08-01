@@ -12,22 +12,26 @@ end
 
 class Square
   attr_reader :piece
-  def initialize(c, v, piece = nil)
+  def initialize(c, v, piece = nil, color = nil)
     @loc = [c, v]
+    if piece.nil?
+      return
+    end
+
     @piece = piece
     case piece
     when "King"
-      @piece = King.new(self, "black")
+      @piece = King.new(self, color)
     when "Queen"
-      @piece = Queen.new(self, "black")
+      @piece = Queen.new(self, color)
     when "Rook"
-      @piece = Rook.new(self, "black")
+      @piece = Rook.new(self, color)
     when "Bishop"
-      @piece = Bishop.new(self, "black")
+      @piece = Bishop.new(self, color)
     when "Knight"
-      @piece = Knight.new(self, "black")
+      @piece = Knight.new(self, color)
     when "Pawn"
-      @piece = Pawn.new(self, "black")
+      @piece = Pawn.new(self, color)
     end
   end
 end
