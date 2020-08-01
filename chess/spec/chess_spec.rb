@@ -23,3 +23,12 @@ RSpec.describe "Square" do
     end
   end
 end
+
+RSpec.describe "Piece" do
+  describe "#initialize" do
+    it "Can be either black or white" do
+      king = King.new(Square.new("a", 1), "black")
+      expect(king.color).to eql("black")
+    end
+  end
+end

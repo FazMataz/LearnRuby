@@ -17,28 +17,35 @@ class Square
     @piece = piece
     case piece
     when "King"
-      @piece = King.new(self)
+      @piece = King.new(self, "black")
     when "Queen"
-      @piece = Queen.new(self)
+      @piece = Queen.new(self, "black")
     when "Rook"
-      @piece = Rook.new(self)
+      @piece = Rook.new(self, "black")
     when "Bishop"
-      @piece = Bishop.new(self)
+      @piece = Bishop.new(self, "black")
     when "Knight"
-      @piece = Knight.new(self)
+      @piece = Knight.new(self, "black")
     when "Pawn"
-      @piece = Pawn.new(self)
+      @piece = Pawn.new(self, "black")
     end
   end
 end
 
 class Piece
-  def initialize(square)
+  attr_reader :color
+  def initialize(square, color)
     @square = square
+    case color.downcase
+    when "black" || "b"
+      @color = "black"
+    when "white" || "w"
+      @color = "white"
+    else
+      raise StandardError.new "Invalid color."
+    end
   end
 end
 
 class King < Piece
-  def initialize(square)
-  end
 end
