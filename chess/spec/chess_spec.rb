@@ -14,3 +14,10 @@ RSpec.describe "Board" do
     end
   end
 end
+
+RSpec.describe "Square" do
+  describe "@piece" do
+    it "Contains a piece object"
+    square = Square.new("King")
+  end
+end
