@@ -38,8 +38,7 @@ class Piece
   end
 end
 
-class King
+class King < Piece
   def initialize(square)
-    super()
   end
 end
