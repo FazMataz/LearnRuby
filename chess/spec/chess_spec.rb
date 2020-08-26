@@ -47,4 +47,12 @@ RSpec.describe "Piece" do
       expect(piece.to_s).to eql("♔")
     end
   end
+  describe "#Move" do
+    it "A piece can be moved to another square" do
+      board = Board.new
+      b_king = King.new(board.grid[["a", 1]], "black")
+      b_king.move("a", "2")
+      expect(board.grid[["a", 2]].piece.class.name).to eql("King")
+    end
+  end
 end
