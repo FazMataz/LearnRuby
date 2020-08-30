@@ -148,8 +148,8 @@ end
 class Rook < Piece
   def initialize(square, color)
     super(square, color)
-    @possible_moves = Set[[0, 1]]
-    @distance_lim = true
+    @possible_moves = Set[[0, 1], [1, 0], [0, -1], [-1, 0]]
+    @distance_lim = false
     case color.downcase
     when "white" || "w"
       @symbol = "♖"
@@ -162,6 +162,7 @@ end
 class Knight < Piece
   def initialize(square, color)
     super(square, color)
+    @possible_moves = Set[[2, 1], [1, 2], [2, -1], [-1, 2], [-2, -1], [-1, -2], [-2, 1], [1, -2]]
     case color.downcase
     when "white" || "w"
       @symbol = "♘"
@@ -186,6 +187,8 @@ end
 class Pawn < Piece
   def initialize(square, color)
     super(square, color)
+    @possible_moves = Set[[0, 1]]
+    @distance_lim = true
     case color.downcase
     when "white" || "w"
       @symbol = "♙"
