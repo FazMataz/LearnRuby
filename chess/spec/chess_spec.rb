@@ -114,3 +114,13 @@ RSpec.describe "Knight" do
     end
   end
 end
+
+RSpec.describe "Bishop" do
+  describe "#possible_moves" do
+    it "Only diagonally" do
+      board = Board.new
+      board.setpiece("a", 1, "Bishop", "black")
+      expect(board.possible_moves("a", 1)).to eql(Set[["b", 2], ["c", 3], ["d", 4], ["e", 5], ["f", 6], ["g", 7], ["h", 8]])
+    end
+  end
+end
