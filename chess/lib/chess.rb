@@ -98,14 +98,20 @@ class Piece
         [ALPHABETPADDED[move[0] + ALPHABETPADDED.index(@square.loc[0])], move[1] + @square.loc[1]]
       end
     else
-      unfiltered = []
-      (0..8).each do
-        
+      unfiltered = (1..8).map do |number|
+        @possible_moves.map do |move|
+          move.map{|submove| submove * number}
+        end
+      end
+      unfiltered = unfiltered.flatten(1)
+      unfiltered = unfiltered.map do |move|
+        [ALPHABETPADDED[move[0] + ALPHABETPADDED.index(@square.loc[0])], move[1] + @square.loc[1]]
       end
     end
     filtered = unfiltered.filter do |move|
       ALPHABET.include?(move[0]) && move[1] >= 1 && move[1] <= 8
     end
+    print filtered
     filtered.to_set
   end
 end
@@ -128,6 +134,8 @@ end
 class Queen < Piece
   def initialize(square, color)
     super(square, color)
+    @possible_moves = Set[[1, 0], [0, 1], [1, 1], [-1, 0], [0, -1], [-1, -1], [-1, 1], [1, -1]]
+    @distance_lim = false
     case color.downcase
     when "white" || "w"
       @symbol = "♕"
@@ -140,6 +148,8 @@ end
 class Rook < Piece
   def initialize(square, color)
     super(square, color)
+    @possible_moves = Set[[0, 1]]
+    @distance_lim = true
     case color.downcase
     when "white" || "w"
       @symbol = "♖"

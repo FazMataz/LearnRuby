@@ -74,3 +74,23 @@ RSpec.describe "King" do
     end
   end
 end
+
+RSpec.describe "Queen" do
+  describe "#possible_moves" do
+    it "Will move in all directions" do
+      board = Board.new
+      board.setpiece("a", 1, "Queen", "black")
+      expect(board.possible_moves("a", 1)).to eql(Set[["a", 2], ["a", 3], ["a", 4], ["a", 5], ["a", 6], ["a", 7], ["a", 8], ["b", 1], ["c", 1], ["d", 1], ["e", 1], ["f", 1], ["g", 1], ["h", 1], ["b", 2], ["c", 3], ["d", 4], ["e", 5], ["f", 6], ["g", 7], ["h", 8]])
+    end
+  end
+end
+
+RSpec.describe "Rook" do
+  describe "#possible_moves" do
+    it "Will only move 1 step forward" do
+      board = Board.new
+      board.setpiece("a", 1, "Rook", "black")
+      expect(board.possible_moves("a", 1)).to eql(Set[["a", 2]])
+    end
+  end
+end
