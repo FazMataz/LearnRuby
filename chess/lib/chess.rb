@@ -109,7 +109,7 @@ class Piece
       end
     end
     filtered = unfiltered.filter do |move|
-      ALPHABET.include?(move[0]) && move[1] >= 1 && move[1] <= 8
+      ALPHABET.include?(move[0]) && move[1] >= 1 && move[1] <= 8 && (@square.board.grid[[move[0], move[1]]].piece.nil? || @square.board.grid[[move[0], move[1]]].piece.color != @color)
     end
     print filtered
     filtered.to_set
