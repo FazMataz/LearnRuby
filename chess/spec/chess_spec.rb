@@ -13,6 +13,22 @@ RSpec.describe "Board" do
       expect(board.grid[["a", 5]].class.name).to eql("Square")
     end
   end
+  describe "#setpiece" do
+    it "Generates a piece in a square" do
+      board = Board.new
+      board.setpiece("a", 1, "King", "black")
+      expect(board.grid[["a", 1]].piece.class.name).to eql("King")
+    end
+  end
+  describe "#move" do
+    it "Moves a piece from one square to another" do
+      board = Board.new
+      board.setpiece("a", 1, "King", "black")
+      board.move("a", 1, "b", 2)
+      expect(board.grid[["a", 1]].piece).to eql(nil)
+      expect(board.grid[["b", 2]].piece.class.name).to eql("King")
+    end
+  end
 end
 
 RSpec.describe "Square" do
@@ -47,12 +63,14 @@ RSpec.describe "Piece" do
       expect(piece.to_s).to eql("♔")
     end
   end
-  describe "#Move" do
-    it "A piece can be moved to another square" do
+end
+
+RSpec.describe "King" do
+  describe "#possible_moves" do
+    it "Will only move 1 square in any direction" do
       board = Board.new
-      b_king = King.new(board.grid[["a", 1]], "black")
-      b_king.move("a", "2")
-      expect(board.grid[["a", 2]].piece.class.name).to eql("King")
+      board.setpiece("a", 1, "King", "black")
+      expect(board.possible_moves("a", 1)).to eql(Set[["a", 2], ["b", 1], ["b", 2]])
     end
   end
 end
