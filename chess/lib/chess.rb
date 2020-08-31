@@ -94,25 +94,37 @@ class Piece
 
   def possible_moves
     if @distance_lim
-      unfiltered = @possible_moves.map do |move|
-        [ALPHABETPADDED[move[0] + ALPHABETPADDED.index(@square.loc[0])], move[1] + @square.loc[1]]
+      moves = @possible_moves.filter_map do |move|
+        move_converted = [ALPHABETPADDED[move[0] + ALPHABETPADDED.index(@square.loc[0])], move[1] + @square.loc[1]]
+        move_converted if ALPHABET.include?(move_converted[0]) && move_converted[1] >= 1 && move_converted[1] <= 8
       end
     else
-      unfiltered = (1..8).map do |number|
-        @possible_moves.map do |move|
-          move.map{|submove| submove * number}
+      moves = @possible_moves.map do |move|
+        stop = false
+        (1..8).filter_map do |number|
+          if stop
+            nil
+          end
+          scaledmove = move.map{|submove| submove * number}
+          newmove = [ALPHABETPADDED[scaledmove[0] + ALPHABETPADDED.index(@square.loc[0])], scaledmove[1] + @square.loc[1]]
+          if @square.board.grid.key?(newmove) && !@square.board.grid[newmove].piece.nil?
+            if @square.board.grid[newmove].piece.color == @color
+              print "Found a same color object in #{newmove}!"
+              stop = true
+              nil
+            else
+              print "Found a different color object in #{newmove}, preventing further moves"
+              stop = true
+              newmove
+            end
+          else
+            newmove if ALPHABET.include?(newmove[0]) && newmove[1] >= 1 && newmove[1] <= 8 && !stop
+          end
         end
       end
-      unfiltered = unfiltered.flatten(1)
-      unfiltered = unfiltered.map do |move|
-        [ALPHABETPADDED[move[0] + ALPHABETPADDED.index(@square.loc[0])], move[1] + @square.loc[1]]
-      end
+      moves = moves.flatten(1).compact
     end
-    filtered = unfiltered.filter do |move|
-      ALPHABET.include?(move[0]) && move[1] >= 1 && move[1] <= 8 && (@square.board.grid[[move[0], move[1]]].piece.nil? || @square.board.grid[[move[0], move[1]]].piece.color != @color)
-    end
-    print filtered
-    filtered.to_set
+    moves.to_set
   end
 end
 

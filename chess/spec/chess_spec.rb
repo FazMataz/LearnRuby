@@ -63,6 +63,38 @@ RSpec.describe "Piece" do
       expect(piece.to_s).to eql("♔")
     end
   end
+  describe "#possible_moves" do
+    it "Possible moves does not include boxes occupied by same color" do
+      board = Board.new
+      board.setpiece("a", 1, "Rook", "black")
+      board.setpiece("a", 2, "Pawn", "black")
+      board.setpiece("b", 1, "Pawn", "black")
+      expect(board.possible_moves("a", 1)).to eql(Set[])
+    end
+    it "Possible moves does not include boxes occupied by the same color(2)" do
+      board = Board.new
+      board.setpiece("a", 1, "Queen", "black")
+      board.setpiece("a", 3, "Pawn", "black")
+      board.setpiece("c", 1, "Pawn", "black")
+      board.setpiece("c", 3, "Pawn", "black")
+      expect(board.possible_moves("a", 1)).to eql(Set[["a", 2], ["b", 1], ["b", 2]])
+    end
+    it "Possible moves includes boxes occupied by opposite color, but not beyond" do
+      board = Board.new
+      board.setpiece("a", 1, "Rook", "black")
+      board.setpiece("a", 2, "Pawn", "white")
+      board.setpiece("b", 1, "Pawn", "white")
+      expect(board.possible_moves("a", 1)).to eql(Set[["a", 2], ["b", 1]])
+    end
+    it "Possible moves includes boxes occupied by opposite color, but not beyond(2)" do
+      board = Board.new
+      board.setpiece("a", 1, "Queen", "black")
+      board.setpiece("a", 2, "Pawn", "white")
+      board.setpiece("b", 1, "Pawn", "white")
+      board.setpiece("b", 2, "Pawn", "white")
+      expect(board.possible_moves("a", 1)).to eql(Set[["a", 2], ["b", 1], ["b", 2]])
+    end
+  end
 end
 
 RSpec.describe "King" do
