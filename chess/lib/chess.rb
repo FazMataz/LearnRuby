@@ -96,7 +96,15 @@ class Piece
     if @distance_lim
       moves = @possible_moves.filter_map do |move|
         move_converted = [ALPHABETPADDED[move[0] + ALPHABETPADDED.index(@square.loc[0])], move[1] + @square.loc[1]]
-        move_converted if ALPHABET.include?(move_converted[0]) && move_converted[1] >= 1 && move_converted[1] <= 8
+        if ALPHABET.include?(move_converted[0]) && move_converted[1] >= 1 && move_converted[1] <= 8
+          if @square.board.grid[move_converted].piece.nil?
+            move_converted
+          elsif @square.board.grid[move_converted].piece.color != @color
+            move_converted
+          else
+            nil
+          end
+        end
       end
     else
       moves = @possible_moves.map do |move|
