@@ -27,6 +27,41 @@ class Board
     piece = @grid[[c, v]].piece
     piece.possible_moves
   end
+
+  def fillboard
+    setpiece("a", 1, "Rook", "white")
+    setpiece("b", 1, "Knight", "white")
+    setpiece("c", 1, "Bishop", "white")
+    setpiece("d", 1, "Queen", "white")
+    setpiece("e", 1, "King", "white")
+    setpiece("f", 1, "Bishop", "white")
+    setpiece("g", 1, "Knight", "white")
+    setpiece("h", 1, "Rook", "white")
+    setpiece("a", 8, "Rook", "black")
+    setpiece("b", 8, "Knight", "black")
+    setpiece("c", 8, "Bishop", "black")
+    setpiece("d", 8, "Queen", "black")
+    setpiece("e", 8, "King", "black")
+    setpiece("f", 8, "Bishop", "black")
+    setpiece("g", 8, "Knight", "black")
+    setpiece("h", 8, "Rook", "black")
+    setpiece("a", 2, "Pawn", "white")
+    setpiece("b", 2, "Pawn", "white")
+    setpiece("c", 2, "Pawn", "white")
+    setpiece("d", 2, "Pawn", "white")
+    setpiece("e", 2, "Pawn", "white")
+    setpiece("f", 2, "Pawn", "white")
+    setpiece("g", 2, "Pawn", "white")
+    setpiece("h", 2, "Pawn", "white")
+    setpiece("a", 7, "Pawn", "black")
+    setpiece("b", 7, "Pawn", "black")
+    setpiece("c", 7, "Pawn", "black")
+    setpiece("d", 7, "Pawn", "black")
+    setpiece("e", 7, "Pawn", "black")
+    setpiece("f", 7, "Pawn", "black")
+    setpiece("g", 7, "Pawn", "black")
+    setpiece("h", 7, "Pawn", "black")
+  end
 end
 
 class Square

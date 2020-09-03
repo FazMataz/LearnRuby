@@ -29,6 +29,36 @@ RSpec.describe "Board" do
       expect(board.grid[["b", 2]].piece.class.name).to eql("King")
     end
   end
+  describe "#fillboard" do
+    it "Fills the board with the starting pieces" do
+      board = Board.new
+      board.fillboard
+      ("abcdefgh").each_char do |c|
+        (1..8).each do |v|
+          if v == 2 || v == 7
+            expect(board.grid[[c, v]].piece.class.name).to eql("Pawn")
+          elsif v == 1 || v == 8
+            if c == "a" || c == "h"
+              expect(board.grid[[c, v]].piece.class.name).to eql("Rook")
+            elsif c == "b" || c == "g"
+              expect(board.grid[[c, v]].piece.class.name).to eql("Knight")
+            elsif c == "c" || c == "f"
+              expect(board.grid[[c, v]].piece.class.name).to eql("Bishop")
+            elsif c == "d"
+              expect(board.grid[[c, v]].piece.class.name).to eql("Queen")
+            elsif c == "e"
+              expect(board.grid[[c, v]].piece.class.name).to eql("King")
+            end
+          end
+          if v == 1 || v == 2
+            expect(board.grid[[c, v]].piece.color).to eql("white")
+          elsif v == 7 || v == 8
+            expect(board.grid[[c, v]].piece.color).to eql("black")
+          end
+        end
+      end
+    end
+  end
 end
 
 RSpec.describe "Square" do
