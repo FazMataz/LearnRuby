@@ -117,11 +117,9 @@ class Piece
           newmove = [ALPHABETPADDED[scaledmove[0] + ALPHABETPADDED.index(@square.loc[0])], scaledmove[1] + @square.loc[1]]
           if @square.board.grid.key?(newmove) && !@square.board.grid[newmove].piece.nil?
             if @square.board.grid[newmove].piece.color == @color
-              print "Found a same color object in #{newmove}!"
               stop = true
               nil
             else
-              print "Found a different color object in #{newmove}, preventing further moves"
               stop = true
               newmove
             end
