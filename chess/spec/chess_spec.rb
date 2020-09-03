@@ -28,6 +28,14 @@ RSpec.describe "Board" do
       expect(board.grid[["a", 1]].piece).to eql(nil)
       expect(board.grid[["b", 2]].piece.class.name).to eql("King")
     end
+    it "Allows a piece from one colour to take another" do
+      board = Board.new
+      board.setpiece("a", 1, "Queen", "white")
+      board.setpiece("a", 8, "Pawn", "black")
+      board.move("a", 1, "a", 8)
+      expect(board.grid[["a", 8]].piece.class.name).to eql("Queen")
+      expect(board.grid[["a", 8]].piece.square.loc).to eql(["a", 8])
+    end
   end
   describe "#fillboard" do
     it "Fills the board with the starting pieces" do
@@ -160,7 +168,14 @@ RSpec.describe "Pawn" do
     it "Will only move 1 step forward" do
       board = Board.new
       board.setpiece("a", 1, "Pawn", "black")
-      expect(board.possible_moves("a", 1)).to eql(Set[["a", 2]])
+      expect(board.possible_moves("a", 1)).to eql(Set[["a", 2], ["a", 3]])
+      board.move("a", 1, "a", 3)
+      expect(board.possible_moves("a", 3)).to eql(Set[["a", 4]])
+    end
+    it "Can do a 2 step move if it is the pawn's first move." do
+      board = Board.new
+      board.fillboard
+      expect(board.possible_moves("a", 2)).to eql(Set[["a", 3], ["a", 4]])
     end
   end
 end

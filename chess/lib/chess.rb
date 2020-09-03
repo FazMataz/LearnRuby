@@ -104,7 +104,7 @@ class Square
 end
 
 class Piece
-  attr_reader :color
+  attr_reader :color, :square
   def initialize(square, color)
     @square = square
     @possible_moves = Set[]
@@ -245,11 +245,22 @@ class Pawn < Piece
     super(square, color)
     @possible_moves = Set[[0, 1]]
     @distance_lim = true
+    @first_move = true
     case color.downcase
     when "white" || "w"
       @symbol = "♙"
     when "black" || "b"
       @symbol = "♟︎"
     end
+  end
+
+  def possible_moves
+    if @first_move == true
+      @possible_moves.add([0, 2])
+      @first_move = false
+    else
+      @possible_moves.delete([0, 2])
+    end
+    super
   end
 end
