@@ -74,6 +74,18 @@ class Board
     setpiece("g", 7, "Pawn", "black")
     setpiece("h", 7, "Pawn", "black")
   end
+
+  def pretty_print
+    printer = ""
+    (1..8).each do |num|
+      letterline = ""
+      ALPHABET.each_char do |letter|
+        letterline += @grid[[letter, num]].piece.nil? ? "|   |" : "| #{@grid[[letter, num]].piece} |"
+      end
+      printer += (letterline + "\n")
+    end
+    printer
+  end
 end
 
 class Square
@@ -106,16 +118,22 @@ class Square
   end
 
   def clear
-    @piece = nil
+    if !@piece.nil?
+      @piece.kill
+      @piece = nil
+    end
   end
 
   def setpiece(piece)
     piece.change_location(self)
     @piece = piece
   end
+
 end
 
 class Piece
+  @@blacks = []
+  @@whites = []
   attr_reader :color, :square
   def initialize(square, color)
     @square = square
@@ -124,8 +142,10 @@ class Piece
     case color.downcase
     when "black" || "b"
       @color = "black"
+      @@blacks << self
     when "white" || "w"
       @color = "white"
+      @@whites << self
     else
       raise StandardError.new "Invalid color."
     end
@@ -191,6 +211,14 @@ class Piece
       moves = moves.flatten(1).compact
     end
     moves.to_set
+  end
+
+  def kill
+    if @color == "black"
+      @@blacks.delete(self)
+    elsif @color == "white"
+      @@whites.delete(self)
+    end
   end
 end
 
