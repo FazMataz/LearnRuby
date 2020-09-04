@@ -36,6 +36,15 @@ RSpec.describe "Board" do
       expect(board.grid[["a", 8]].piece.class.name).to eql("Queen")
       expect(board.grid[["a", 8]].piece.square.loc).to eql(["a", 8])
     end
+    context "Moving piece is a pawn" do
+      it "Can move diagonally if a piece of opposite color is there" do
+        board = Board.new
+        board.setpiece("a", 3, "Pawn", "black")
+        board.setpiece("b", 2, "Pawn", "white")
+        board.setpiece("c", 3, "Pawn", "black")
+        expect(board.possible_moves("b", 2)).to eql(Set[["b", 3], ["b", 4], ["a", 3], ["c", 3]])
+      end
+    end
   end
   describe "#fillboard" do
     it "Fills the board with the starting pieces" do

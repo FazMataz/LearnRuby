@@ -1,4 +1,5 @@
 require "set"
+require "yaml"
 ALPHABET = "abcdefgh"
 ALPHABETPADDED = "zzzzzzzzzzzzabcdefghzzzzzzzzzzz"
 
@@ -141,6 +142,19 @@ class Piece
           end
         end
       end
+      if self.class.name == "Pawn"
+        only_take_move = Set[[1, 1], [-1, 1]]
+        moves += only_take_move.filter_map do |take_move|
+          converted_take_move = [ALPHABETPADDED[take_move[0] + ALPHABETPADDED.index(@square.loc[0])], take_move[1] + @square.loc[1]]
+          if ALPHABET.include?(converted_take_move[0]) && converted_take_move[1] >= 1 && converted_take_move[1] <= 8
+            if !@square.board.grid[converted_take_move].piece.nil? && @square.board.grid[converted_take_move].piece.color != @color
+              converted_take_move
+            else
+              nil
+            end
+          end
+        end
+      end
     else
       moves = @possible_moves.map do |move|
         stop = false
@@ -181,7 +195,6 @@ class King < Piece
       @symbol = "♚"
     end
   end
-
 end
 
 class Queen < Piece
