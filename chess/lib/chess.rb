@@ -7,6 +7,8 @@ class Board
   attr_reader :grid
   def initialize
     @grid = Hash.new(nil)
+    @whites = []
+    @blacks = []
     (1..8).each do |v|
       ALPHABET.each_char do |c|
         @grid[[c, v]] = Square.new(c, v, nil, nil, self)
@@ -26,11 +28,33 @@ class Board
   end
 
   def setpiece(c, v, piece, color)
-    @grid[[c, v]].genpiece(piece, color)
+    newpiece = @grid[[c, v]].genpiece(piece, color)
+    if color == "black"
+      @blacks << newpiece
+    elsif color == "white"
+      @whites << newpiece
+    end
+  end
+
+  def getall(color)
+    if color != "white" && color != "black"
+      raise StandardError.new "Invalid color."
+    elsif color == "white"
+      return @whites
+    elsif color == "black"
+      return @blacks
+    end
   end
 
   def move(c1, v1, c2, v2)
     piece = @grid[[c1, v1]].piece
+    if !@grid[[c2, v2]].piece.nil?
+      if @grid[[c2, v2]].piece.color == "black"
+        @blacks.delete(@grid[[c2, v2]].piece)
+      elsif @grid[[c2, v2]].piece.color == "white"
+        @white.delete(@grid[[c2, v2]].piece)
+      end
+    end
     @grid[[c1, v1]].clear
     @grid[[c2, v2]].setpiece(piece)
   end
@@ -115,13 +139,11 @@ class Square
     when "Pawn"
       @piece = Pawn.new(self, color)
     end
+    @piece
   end
 
   def clear
-    if !@piece.nil?
-      @piece.kill
-      @piece = nil
-    end
+    @piece = nil
   end
 
   def setpiece(piece)
@@ -132,8 +154,6 @@ class Square
 end
 
 class Piece
-  @@blacks = []
-  @@whites = []
   attr_reader :color, :square
   def initialize(square, color)
     @square = square
@@ -142,10 +162,8 @@ class Piece
     case color.downcase
     when "black" || "b"
       @color = "black"
-      @@blacks << self
     when "white" || "w"
       @color = "white"
-      @@whites << self
     else
       raise StandardError.new "Invalid color."
     end
@@ -211,14 +229,6 @@ class Piece
       moves = moves.flatten(1).compact
     end
     moves.to_set
-  end
-
-  def kill
-    if @color == "black"
-      @@blacks.delete(self)
-    elsif @color == "white"
-      @@whites.delete(self)
-    end
   end
 end
 

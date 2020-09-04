@@ -150,6 +150,13 @@ RSpec.describe "Piece" do
       expect(board.possible_moves("a", 1)).to eql(Set[["a", 2], ["b", 1], ["b", 2]])
     end
   end
+  describe "#kill" do
+    it "When a piece is taken, it is no longer in the class variable" do
+      board = Board.new
+      board.setpiece("a", 1, "Queen", "black")
+      expect(board.getall("black")).to eql([board.grid[["a", 1]].piece])
+    end
+  end
 end
 
 RSpec.describe "King" do
