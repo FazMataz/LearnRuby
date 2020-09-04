@@ -7,11 +7,22 @@ class Board
   attr_reader :grid
   def initialize
     @grid = Hash.new(nil)
-    (0..8).each do |v|
+    (1..8).each do |v|
       ALPHABET.each_char do |c|
         @grid[[c, v]] = Square.new(c, v, nil, nil, self)
       end
     end
+  end
+
+  def save
+    File.open("save.yml", "w") {|file| file.write(YAML.dump ({
+      :grid => @grid,
+    }))}
+  end
+
+  def load
+    data = YAML.load File.open("save.yml", "r")
+    @grid = data[:grid]
   end
 
   def setpiece(c, v, piece, color)
