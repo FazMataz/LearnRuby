@@ -155,6 +155,9 @@ RSpec.describe "Piece" do
       board = Board.new
       board.setpiece("a", 1, "Queen", "black")
       expect(board.getall("black")).to eql([board.grid[["a", 1]].piece])
+      board.setpiece("a", 2, "Rook", "white")
+      board.move("a", 2, "a", 1)
+      expect(board.getall("black")).to eql([])
     end
   end
 end
