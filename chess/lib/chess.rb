@@ -110,6 +110,38 @@ class Board
     end
     printer
   end
+
+  def check?(c, v, colour)
+    v = v.to_i
+    if colour != "black" && colour != "white"
+      raise ValueError.new "Invalid Colour"
+    elsif colour == "black"
+      getall("white").each do |piece|
+        if piece.possible_moves.include?([c, v])
+          return true
+        end
+      end
+    elsif colour == "white"
+      getall("black").each do |piece|
+        if piece.possible_moves.include?([c, v])
+          return true
+        end
+      end
+    end
+    return false
+  end
+
+  def checkmate?(c, v, colour)
+    v = v.to_i
+    if colour != "black" && colour != "white"
+      raise ValueError.new "Invalid Colour"
+    end
+    if !check?(c, v, colour)
+      false
+    else
+      self.grid[[c, v]].piece.possible_moves.all? {|move| check?(move[0], move[1], colour) == true}
+    end
+  end
 end
 
 class Square

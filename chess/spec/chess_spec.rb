@@ -75,6 +75,41 @@ RSpec.describe "Board" do
         end
       end
     end
+  describe "#check?" do
+    it "Determines whether a king is in check" do
+      board = Board.new
+      board.setpiece("a", 1, "King", "white")
+      board.setpiece("b", 2, "Bishop", "black")
+      expect(board.check?("a", 1, "white")).to eql(true)
+      end
+    end
+  end
+  describe "#checkmate?" do
+    it "Determines whether a king is checkmate" do
+      board = Board.new
+      board.setpiece("b", 2, "King", "white")
+      board.setpiece("b", 1, "Queen", "white")
+      board.setpiece("a", 1, "Pawn", "white")
+      board.setpiece("a", 2, "Rook", "white")
+      board.setpiece("a", 3, "Pawn", "white")
+      board.setpiece("c", 3, "Pawn", "white")
+      board.setpiece("c", 2, "Pawn", "white")
+      board.setpiece("c", 1, "Pawn", "white")
+      board.setpiece("b", 4, "Rook", "black")
+      expect(board.checkmate?("b", 2, "white")).to eql(true)
+    end
+    it "Can return negative" do
+      board = Board.new
+      board.setpiece("b", 2, "King", "white")
+      board.setpiece("b", 1, "Queen", "white")
+      board.setpiece("a", 1, "Pawn", "white")
+      board.setpiece("a", 3, "Pawn", "white")
+      board.setpiece("c", 3, "Pawn", "white")
+      board.setpiece("c", 2, "Pawn", "white")
+      board.setpiece("c", 1, "Pawn", "white")
+      board.setpiece("b", 4, "Rook", "black")
+      expect(board.checkmate?("b", 2, "white")).to eql(false)
+    end
   end
 end
 
